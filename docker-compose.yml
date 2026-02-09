@@ -1,0 +1,26 @@
+services:
+  portainer:
+    image: portainer/portainer-ce:latest
+    container_name: fermento-portainer
+    restart: unless-stopped
+    ports:
+      - "9443:9443" # HTTPS UI
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer_data:/data
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: fermento-grafana
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      GF_SECURITY_ADMIN_USER: admin
+      GF_SECURITY_ADMIN_PASSWORD: gr$590-mMkloqRt_90
+    volumes:
+      - grafana_data:/var/lib/grafana
+
+volumes:
+  portainer_data:
+  grafana_data:
