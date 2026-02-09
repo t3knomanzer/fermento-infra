@@ -8,6 +8,8 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - portainer_data:/data
+    networks:
+      - edge-net
 
   grafana:
     image: grafana/grafana:latest
@@ -20,7 +22,14 @@ services:
       GF_SECURITY_ADMIN_PASSWORD: gr$590-mMkloqRt_90
     volumes:
       - grafana_data:/var/lib/grafana
+    networks:
+      - edge-net
 
 volumes:
   portainer_data:
   grafana_data:
+
+
+networks:
+  edge-net:
+    external: true
