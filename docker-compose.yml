@@ -11,23 +11,25 @@ services:
     networks:
       - edge-net
 
-  grafana:
-    image: grafana/grafana:latest
-    container_name: fermento-grafana
+  dozzle:
+    image: amir20/dozzle:latest
+    container_name: dozzle
     restart: unless-stopped
     ports:
-      - "3000:3000"
-    environment:
-      GF_SECURITY_ADMIN_USER: admin
-      GF_SECURITY_ADMIN_PASSWORD: gr$590-mMkloqRt_90
+      - "9999:8080"
     volumes:
-      - grafana_data:/var/lib/grafana
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    environment:
+      - DOZZLE_LEVEL=info
+      # Optional: show container actions (start/stop) in the UI
+      # - DOZZLE_ENABLE_ACTIONS=true
+      # Optional: limit visible containers by name (regex)
+      # - DOZZLE_FILTER=fermento-.*
     networks:
       - edge-net
 
 volumes:
   portainer_data:
-  grafana_data:
 
 
 networks:
